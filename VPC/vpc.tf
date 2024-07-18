@@ -1,21 +1,21 @@
-terraform {
-  required_version = "~> 1.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-west-2"
-}
 
 resource "aws_vpc" "main" {
-  cidr_block = "192.168.0.0/16"
+  cidr_block = var.vpc-cidr
 
   tags = {
     Name = "FirstVPC"
   }
 }
+
+#create a subnet
+resource "aws_subnet" "main" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.First-subnet
+  availability_zone = "us-west-2a"  
+
+  tags = {
+    Name = var.vpc-name
+  }
+}
+
+
